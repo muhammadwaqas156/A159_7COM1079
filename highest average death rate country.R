@@ -22,11 +22,18 @@ entity_death_rate <- data %>%
 # Get the top 10 entities with the highest death rates
 top_entities <- head(entity_death_rate, 10)
 
-# Create a bar plot
-ggplot(top_entities, aes(x = reorder(Entity, Avg_Death_Rate), y = Avg_Death_Rate)) +
-  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
-  coord_flip() +  # Flip coordinates for better readability
-  labs(title = "Top 10 Entities with Highest Average Death Rates",
-       x = "Entity",
-       y = "Average Death Rate (per 100,000 people)") +
+# Calculate mean and standard deviation of the death rates
+mean_rate <- mean(top_entities$Avg_Death_Rate, na.rm = TRUE)
+sd_rate <- sd(top_entities$Avg_Death_Rate, na.rm = TRUE)
+
+# Create a histogram for Death Rates and overlay a normal curve
+ggplot(data, aes(x = Death_Rate)) +
+  geom_histogram(aes(y = ..density..), binwidth = 20, fill = "skyblue", color = "black", alpha = 0.7) +
+  stat_function(fun = dnorm,
+                args = list(mean = mean(data$Death_Rate, na.rm = TRUE),
+                            sd = sd(data$Death_Rate, na.rm = TRUE)),
+                color = "red", size = 1) +
+  labs(title = "Histogram of Death Rates with Normal Curve",
+       x = "Death Rate (per 100,000 people)",
+       y = "Frequency") +
   theme_minimal(base_size = 12)
