@@ -8,7 +8,7 @@ top_2_countries <- data %>%
   group_by(Entity) %>%
   summarise(Mean_Death_Rate = mean(Death_Rate, na.rm = TRUE)) %>%
   arrange(desc(Mean_Death_Rate)) %>%
-  slice(1:10)  # Select top 2 countries
+  slice(1:2)  # Select top 2 countries
 
 head(top_2_countries)
 
