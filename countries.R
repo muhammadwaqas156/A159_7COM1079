@@ -19,3 +19,19 @@ entity_death_rate <- data %>%
 
 
 
+# Get the top 10 entities with the highest death rates
+top_entities <- head(entity_death_rate, 2)
+
+# Calculate mean and standard deviation of the death rates
+mean_rate <- mean(top_entities$Avg_Death_Rate, na.rm = TRUE)
+sd_rate <- sd(top_entities$Avg_Death_Rate, na.rm = TRUE)
+
+
+# Total number of observations
+total_obs <- nrow(data)
+
+
+# Create the boxplot
+ggplot(top_entities, aes(x = Entity, y = Avg_Death_Rate)) +
+  geom_boxplot(fill = "yellow", color = "red", outlier.color = "black", outlier.size = 2) 
+  
