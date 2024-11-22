@@ -1,17 +1,16 @@
-# Load necessary libraries
 library(ggplot2)
 library(dplyr)
 
 # Read the CSV file
 data <- read.csv("5- respiratory-infection-death-rate-who-mdb.csv")
 
-# Rename columns for clarity
+# Renamed columns for clarity
 colnames(data) <- c("Entity", "Code", "Year", "Death_Rate")
 
-# Convert Death_Rate to numeric 
+# Converted Death_Rate to numeric 
 data$Death_Rate <- as.numeric(data$Death_Rate)
 
-# Aggregate data: calculate mean Death_Rate by Entity
+# Aggregate data: calculated mean Death_Rate by Entity
 entity_death_rate <- data %>%
   group_by(Entity) %>%
   summarise(Avg_Death_Rate = mean(Death_Rate, na.rm = TRUE)) %>%
@@ -39,7 +38,7 @@ ggplot(data, aes(x = Death_Rate)) +
           sd = sd(data$Death_Rate, na.rm = TRUE)) * 
       total_obs * 20  # Multiply by total observations and binwidth
   }, color = "red", size = 1) +
-  labs(title = "Histogram of Death Rates with Normal Curve",
-       x = "Death Rate (per 100,000 people)",
+  labs(title = "Histogram of Death Rates",
+       x = "   Death Rate (per 100,000 people)",
        y = "Frequency") +
   theme_minimal(base_size = 12)
