@@ -12,11 +12,11 @@ top_2_countries <- data %>%
 
 head(top_2_countries)
 
-# Filter the dataset for only the top 2 countries
+# Filter the dataset for only the  2 countries
 filtered_data <- data %>%
   filter(Entity %in% top_2_countries$Entity)
 
-# Plot boxplot for the top 2 countries
+# Plot boxplot for the  2 countries
 ggplot(filtered_data, aes(x = fct_reorder(Entity, Death_Rate, .fun = mean, na.rm = TRUE), y = Death_Rate)) +
   geom_boxplot(fill = "skyblue", color = "black", outlier.color = "red", outlier.shape = 16) +
   stat_summary(fun = mean, geom = "point", shape = 18, color = "darkorange", size = 3) +  # Add mean as a point

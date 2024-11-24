@@ -8,7 +8,7 @@ data <- read.csv("5- respiratory-infection-death-rate-who-mdb.csv")
 # Rename columns for clarity
 colnames(data) <- c("Entity", "Code", "Year", "Death_Rate")
 
-# Convert Death_Rate to numeric (if needed)
+# Convert Death_Rate to numeric 
 data$Death_Rate <- as.numeric(data$Death_Rate)
 
 # Aggregate data: calculate mean Death_Rate by Entity
@@ -19,8 +19,8 @@ entity_death_rate <- data %>%
 
 
 
-# Get the top 10 entities with the highest death rates
-top_entities <- head(entity_death_rate, 10)
+# Get the top 2 entities with the highest death rates
+top_entities <- head(entity_death_rate, 2)
 
 # Calculate mean and standard deviation of the death rates
 mean_rate <- mean(top_entities$Avg_Death_Rate, na.rm = TRUE)
@@ -32,12 +32,12 @@ total_obs <- nrow(data)
 
 # Create a histogram for Death Rates with frequency on Y-axis and overlay a normal curve
 ggplot(data, aes(x = Death_Rate)) +
-  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
+  geom_histogram(binwidth = 20, fill = "skyblue", color = "black", alpha = 0.7) +
   stat_function(fun = function(x) {
     # Scale the normal curve to match the histogram's frequency
     dnorm(x, mean = mean(data$Death_Rate, na.rm = TRUE), 
           sd = sd(data$Death_Rate, na.rm = TRUE)) * 
-      total_obs * 10  # Multiply by total observations and binwidth
+      total_obs * 20  # Multiply by total observations and binwidth
   }, color = "red", size = 1) +
   labs(title = "Histogram of Death Rates with Normal Curve",
        x = "Death Rate (per 100,000 people)",
