@@ -16,6 +16,7 @@ filtered_countries <- subset(filtered_data, Entity %in% top_countries)
 # Create the boxplot
 ggplot(filtered_countries, aes(x = Entity, y = Death_Rate, fill = Entity)) +
   geom_boxplot(outlier.color = "red", outlier.shape = 16, notch = FALSE) +
+  stat_summary(fun = mean, geom = "point", shape = 18, color = "darkorange", size = 3) +  # Add mean as a point
   labs(title = "Boxplot of Death Rates by Country",
        x = "Country",
        y = "Death Rate (per 100,000 people)") +
