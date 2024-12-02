@@ -20,3 +20,7 @@ print(unique(top_2_data$Country))
 # Perform t-test
 t_test_result <- t.test(Death ~ Country, data = top_2_data)
 print(t_test_result)
+
+
+
+

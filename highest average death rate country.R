@@ -37,3 +37,4 @@ ggplot(data, aes(x = Death_Rate)) +
        x = "Death Rate (per 100,000 people)",
        y = "Frequency") +
   theme_minimal(base_size = 12)
+
