@@ -17,28 +17,23 @@ entity_death_rate <- data %>%
   summarise(Avg_Death_Rate = mean(Death_Rate, na.rm = TRUE)) %>%
   arrange(desc(Avg_Death_Rate))
 
-
-
-# Get the top 10 entities with the highest death rates
+# Get the top 2 entities with the highest death rates
 top_entities <- head(entity_death_rate, 2)
 
 # Calculate mean and standard deviation of the death rates
 mean_rate <- mean(top_entities$Avg_Death_Rate, na.rm = TRUE)
 sd_rate <- sd(top_entities$Avg_Death_Rate, na.rm = TRUE)
 
-
 # Total number of observations
 total_obs <- nrow(data)
 
-
-# Create the boxplot
+# Create the boxplot with more visible red lines
 ggplot(top_entities, aes(x = Entity, y = Avg_Death_Rate)) +
-  geom_boxplot(fill = "yellow", color = "red", outlier.color = "black", outlier.size = 2) +
+  geom_boxplot(fill = "yellow", color = "red", size = 1.5, outlier.color = "black", outlier.size = 2) +
   labs(
-    title = "Boxplot of Death Rates for Top 10 Countries",
+    title = "Boxplot of Death Rates for Top 2 Countries",
     x = "Country",
     y = "Death Rate (per 100,000)"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
