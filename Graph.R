@@ -41,3 +41,4 @@ ggplot(top_entities, aes(x = Entity, y = Avg_Death_Rate, fill = Entity)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.position = "none"
   )
+

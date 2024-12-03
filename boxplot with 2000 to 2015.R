@@ -7,10 +7,11 @@ data <- read.csv("5- respiratory-infection-death-rate-who-mdb.csv")
 # Rename columns for clarity
 colnames(data) <- c("Entity", "Code", "Year", "Death_Rate")
 
-filtered_data <- subset(data, Year >= 2000 & Year <= 2015 & (Entity == "Guatemala" | Entity == "South Africa"))
+# Filter data for the years 2000 to 2015 and specific countries
+filtered_data <- subset(data, Year >= 2000 & Year <= 2015)
 
-# Select a subset of countries (e.g., top 5 countries with most data entries)
-top_countries <- unique(filtered_data$Entity)[1:2]  # Replace with desired countries
+# Select a subset of countries (e.g., top 3 countries with most data entries)
+top_countries <- unique(filtered_data$Entity)[1:3]  # Modify to select three countries
 filtered_countries <- subset(filtered_data, Entity %in% top_countries)
 
 # Create the boxplot
@@ -22,3 +23,4 @@ ggplot(filtered_countries, aes(x = Entity, y = Death_Rate, fill = Entity)) +
        y = "Death Rate (per 100,000 people)") +
   theme_minimal() +
   theme(legend.position = "none")
+

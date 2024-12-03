@@ -1,24 +1,31 @@
-library(readr)
+# Load necessary library
+library(ggplot2)
 
 # Load the dataset
-# Replace the file path with the location of your dataset
-file_path <- "5- respiratory-infection-death-rate-who-mdb.csv"
-data <- read_csv("5- respiratory-infection-death-rate-who-mdb.csv")
+data <- read.csv("5- respiratory-infection-death-rate-who-mdb.csv")
 
-# Display the first few rows to understand the structure of the dataset
-head(data)
+# Rename columns for clarity
+colnames(data) <- c("Entity", "Code", "Year", "Death_Rate")
 
-# Calculate standard deviation for a specific column
-Death_Rate <- "Death_Rate"
-if (Death_Rate %in% colnames(data) <- c("Death_Rate")) {
-  std_deviation <- sd(data[[Death_Rate]], na.rm = TRUE)
-  cat("Standard Deviation of '", Death_Rate, "': ", std_deviation, "\n", sep = "")
-} else {
-  cat("Column '", Death_Rate, "' not found in the dataset.\n", sep = "")
+# Filter data for the years 2000 to 2015 and specific countries
+filtered_data <- subset(data, Year >= 2000 & Year <= 2015)
+
+# Select a subset of countries (e.g., top 3 countries with most data entries)
+top_countries <- unique(filtered_data$Entity)[1:3]  # Modify to select three countries
+filtered_countries <- subset(filtered_data, Entity %in% top_countries)
+
+# Custom function for calculating standard deviation
+stat_sd <- function(x) {
+  return(c(y = mean(x), ymin = mean(x) - sd(x), ymax = mean(x) + sd(x)))
 }
 
-# (Optional) Calculate standard deviation for all numeric columns
-std_all <- sapply(data, function(x) if (is.numeric(x)) sd(x, na.rm = TRUE) else NA)
-cat("\nStandard Deviation for all numerical columns:\n")
-print(std_all)
-
+# Create the boxplot with standard deviation
+ggplot(filtered_countries, aes(x = Entity, y = Death_Rate, fill = Entity)) +
+  geom_boxplot(outlier.color = "red", outlier.shape = 16, notch = FALSE) +
+  stat_summary(fun.data = stat_sd, geom = "errorbar", width = 0.2, color = "blue", size = 0.8) +  # Add error bars for standard deviation
+  stat_summary(fun = mean, geom = "point", shape = 18, color = "darkorange", size = 3) +  # Add mean as a point
+  labs(title = "Boxplot of Death Rates by Country with Standard Deviation",
+       x = "Country",
+       y = "Death Rate (per 100,000 people)") +
+  theme_minimal() +
+  theme(legend.position = "none")

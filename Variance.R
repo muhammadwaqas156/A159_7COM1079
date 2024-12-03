@@ -11,11 +11,12 @@ colnames(data) <- c("Entity", "Code", "Year", "Death_Rate", "Region")  # Ensure 
 # Filter data for the years 2000 to 2015
 filtered_data <- subset(data, Year >= 2000 & Year <= 2015)
 
-# Summarize by region
+# Summarize by region, including variance
 region_summary <- filtered_data %>%
   group_by(Region) %>%
   summarize(
     Mean_Death_Rate = mean(Death_Rate, na.rm = TRUE),
+    Variance_Death_Rate = var(Death_Rate, na.rm = TRUE),  # Variance calculation
     Median_Death_Rate = median(Death_Rate, na.rm = TRUE),
     SD_Death_Rate = sd(Death_Rate, na.rm = TRUE),
     Min_Death_Rate = min(Death_Rate, na.rm = TRUE),
@@ -24,15 +25,15 @@ region_summary <- filtered_data %>%
   )
 
 # Print summary
-print(region_summary)
+print(Region)
 
-# Optionally, create a barplot for the mean death rate by region
-ggplot(region_summary, aes(x = reorder(Region, -Mean_Death_Rate), y = Mean_Death_Rate, fill = Region)) +
+# Optional: Create a barplot for the variance of death rate by region
+ggplot(region_summary, aes(x = reorder(Region, -Variance_Death_Rate), y = Variance_Death_Rate, fill = Region)) +
   geom_bar(stat = "identity") +
   labs(
-    title = "Mean Death Rate by Region (2000-2015)",
+    title = "Variance in Death Rate by Region (2000-2015)",
     x = "Region",
-    y = "Mean Death Rate (per 100,000 people)"
+    y = "Variance in Death Rate"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
