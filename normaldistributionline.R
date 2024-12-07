@@ -27,3 +27,4 @@ ggplot(filtered_data, aes(x = DeathRate)) +
     x = "Death Rate (per 100,000 people)",
     y = "Density"
   )
+
