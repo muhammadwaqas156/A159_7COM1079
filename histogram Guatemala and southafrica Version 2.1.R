@@ -33,3 +33,5 @@ ggplot(filtered_data, aes(x = Death_Rate)) +
     y = "Frequency"
   ) +
   theme_minimal()
+
+
