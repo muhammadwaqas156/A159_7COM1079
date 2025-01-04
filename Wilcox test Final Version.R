@@ -16,6 +16,7 @@ mean_death_rates <- aggregate(Death_Rate ~ Entity, data = filtered_data, FUN = m
 print(mean_death_rates)
 
 
+
 # Perform wilcox test
 mann_whitney_result <- wilcox.test(Death_Rate ~ Entity, data = filtered_data)
 print(mann_whitney_result)
